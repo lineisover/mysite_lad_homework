@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Список заказов{% endblock title %}
+{% block content %}
+<p><a href={% url "home" %}>На главную</a></p>
+<div class="container">
+    <h1>Список заказов:</h1>
+    {% for order in orders %}
+        <div class="card text-dark bg-light mb-3">
+            <h3 class="card-header">Заказ №{{ order.pk }}</h3>
+            <div class="card-body">
+                <p>Клиент: {{ order.client.username }}</p>
+                <p>Комментарий: {{ order.comment }}</p>
+                <p>Промокод: {{ order.promo }}</p>
+                <p>Дата изменения заказа: {{ order.update_time }}</p>
+                <div class="card">
+                    <div class="card-header">
+                        Список товаров:
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for product in order.products.all %}
+                        <li class="list-group-item">{{ product.name }} Цена: {{ product.price }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
